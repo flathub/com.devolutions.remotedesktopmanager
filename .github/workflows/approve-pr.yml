@@ -1,0 +1,48 @@
+name: Approve PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number
+        required: true
+
+jobs:
+  approve_pr:
+    environment: pull-request
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get actors info
+        id: actor_info
+        run: |
+          PR_AUTHOR=$(gh pr view ${{ inputs.pr_number }} --repo flathub/com.devolutions.remotedesktopmanager --json author -q '.author.login')
+
+          APPROVER=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/approvals")
+          APPROVER_LOGIN=$(echo $APPROVER | jq -r '.[0].user.login')
+
+          echo "approver=$APPROVER_LOGIN" >> $GITHUB_OUTPUT
+          echo "author=$PR_AUTHOR" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.DEVOLUTIONSBOT_WRITE_TOKEN }}
+
+      - name: Validate Approver
+        run: |
+          if [ "${{ steps.actor_info.outputs.author }}" == "${{ steps.actor_info.outputs.approver }}" ]; then
+            echo "::error:: You can't approve your own PR"
+            exit 1
+          fi
+
+      - name: Merge pull request
+        run: |
+          echo "Waiting for checks to start..."
+          sleep 120
+          echo "Checking if checks have started..."
+          gh pr checks ${{ inputs.pr_number }} --repo flathub/com.devolutions.remotedesktopmanager --watch --fail-fast
+          gh pr merge ${{ inputs.pr_number }} --repo flathub/com.devolutions.remotedesktopmanager --squash --delete-branch --admin
+        env:
+          GH_TOKEN: ${{ secrets.DEVOLUTIONSBOT_WRITE_TOKEN }}
