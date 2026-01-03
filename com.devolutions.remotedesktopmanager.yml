@@ -28,10 +28,11 @@ modules:
     sources:
       - type: git
         url: https://gitlab.gnome.org/GNOME/vte.git
-        tag: 0.72.4
+        tag: 0.82.3
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
+        commit: 18fca6d0a124c2d0fb87293306626db1d5ba8ebc
   - name: xdotool
     no-autogen: true
     make-args:
