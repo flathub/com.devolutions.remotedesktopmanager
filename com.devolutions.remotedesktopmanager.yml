@@ -1,9 +1,7 @@
 app-id: com.devolutions.remotedesktopmanager
 runtime: org.gnome.Platform
-runtime-version: '48'
+runtime-version: '49'
 sdk: org.gnome.Sdk
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.rust-stable
 command: remotedesktopmanager
 tags:
   - proprietary
@@ -49,7 +47,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/lsof-org/lsof.git
-        tag: 4.99.3
+        tag: 4.99.5
   - name: rdm
     buildsystem: simple
     build-commands:
