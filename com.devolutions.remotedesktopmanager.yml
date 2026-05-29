@@ -51,14 +51,14 @@ modules:
       - install -D bin/remotedesktopmanager ${FLATPAK_DEST}/bin/remotedesktopmanager
     sources:
       - type: file
-        url: https://cdn.devolutions.net/download/Linux/RDM/2026.1.2.2/RemoteDesktopManager_2026.1.2.2_amd64.deb
+        url: https://cdn.devolutions.net/download/Linux/RDM/2026.1.2.4/RemoteDesktopManager_2026.1.2.4_amd64.deb
         dest-filename: RemoteDesktopManager.deb
-        sha256: ac24ae542e8a631484427f768ffb62c655cb22c2b5c17fced428e37b541095c9
+        sha256: 1b92e899393c729dd426d8e2ecac736366b8eb21460f5248d0c2fb0f2ce70840
         only-arches:
           - x86_64
       - type: file
-        url: https://cdn.devolutions.net/download/Linux/RDM/2026.1.2.2/RemoteDesktopManager_2026.1.2.2_arm64.deb
+        url: https://cdn.devolutions.net/download/Linux/RDM/2026.1.2.4/RemoteDesktopManager_2026.1.2.4_arm64.deb
         dest-filename: RemoteDesktopManager.deb
-        sha256: 6488b14878ff24a44a0b38610f44151e596cca6acffdc6ba52b4d16dcda4ac62
+        sha256: 0fb805acb0c9fd04ab01285d70369b5500b3657a1ad3a700865915cbc0aa260c
         only-arches:
           - aarch64
